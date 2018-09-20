@@ -1,7 +1,7 @@
 /*  Main.cpp
-*   Main file for the project
-*   You know like has the main window in it and all the other stuff
-*   Will probably dump all the libraries needed for compilation/linkage in the one project cuz how else you meant to do it
+*   Author: Hugo Sebesta
+*   Project primarily for personal use so probably no one will ever see this
+*   If anyone does then I said hi!
 */
 
 
