@@ -1,2 +1,3 @@
-We now have a read me.
-This will have something in it eventually.
+README for Notes - Text and Note organiser for school students
+Primary tasks are to organise, sort and collect text files into helpful categories for the user.
+GUI based.
