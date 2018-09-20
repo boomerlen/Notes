@@ -1,6 +1,7 @@
 // Note.h - header file for parent "note" Class
 
 #include <iostream>
+#include <string>
 #include "subject.h"
 
 using namespace std;
@@ -11,18 +12,18 @@ using namespace std;
 class note
 {
 public:
-  note(char[256], char[32], subject);
+  note(string, string, subject);
 
-  void setLocation(char[256]);
-  void setName(char[32] = "");
+  void setLocation(string);
+  void setName(string = "");
   void setSubject(subject);
   void addTag(int);
 
   void removeTag(int);
   ~note();
 private:
-  char[256] location;
-  char[32] name;
+  string location;
+  string name;
   subject sub;
   int[16] tags; // Notes can have up to 16 tags, each have an int ID. IDs are going to be resolved by reading from a seperate file detailing These
 }

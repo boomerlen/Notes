@@ -2,8 +2,9 @@
 
 #include "subject.h"
 #include "note.h"
+#include <string>
 
-note::note(char[256] loc, char[32] n, subject s)
+note::note(string loc, string n, subject s)
 {
   location = loc;
   name = n;
@@ -11,13 +12,23 @@ note::note(char[256] loc, char[32] n, subject s)
   return note;
 }
 
-void note::setLocation(char[256] loc)
+void note::setLocation(string loc)
 {
   location = loc;
   return;
 }
 
-void note::setName(char[32] n = "")
+void note::setName(string n = "")
 {
-  
+  if(n == "")
+  {
+    // Set it equal to the end of the location
+    string key = '\\';
+    size_t pos = location.rfind(key);
+    char[32] buffer;
+    name = location.copy(buffer, 32, pos);
+    return;
+  }
+  name = n;
+  return;
 }
