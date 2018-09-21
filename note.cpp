@@ -1,16 +1,17 @@
 // Note.cpp
 
-#include "subject.h"
-#include "note.h"
 #include <string>
 #include <vector>
+#include "subject.h"
+#include "note.h"
 
-note::note(string loc, string n, subject s)
+using namespace std;
+
+note::note(string loc, string n, subjects s)
 {
   location = loc;
   name = n;
   sub = s;
-  return note;
 }
 
 void note::setLocation(string loc)
@@ -34,7 +35,7 @@ void note::setName(string n = "")
   return;
 }
 
-void note::setSubject(subject s);
+void note::setSubject(subjects s);
 {
   sub = s;
   return;
@@ -42,7 +43,7 @@ void note::setSubject(subject s);
 
 void note::addTag(int tag)
 {
-  tags.push_back(tag);
+  std::tags.push_back(tag);
   return;
 }
 
@@ -51,12 +52,12 @@ string note::getName()
   return name;
 }
 
-subject note::getSubject()
+subjects note::getSubject()
 {
   return sub;
 }
 
-vector note::getTags()
+std::vector<int> note::getTags()
 {
   return tags;
 }
