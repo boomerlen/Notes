@@ -32,3 +32,30 @@ void note::setName(string n = "")
   name = n;
   return;
 }
+
+void note::setSubject(subject s);
+{
+  sub = s;
+  return;
+}
+
+void note::addTag(int tag)
+{
+  tags.push_back(tag);
+  return;
+}
+
+string note::getName()
+{
+  return name;
+}
+
+subject note::getSubject()
+{
+  return sub;
+}
+
+vector note::getTags()
+{
+  return tags;
+}
