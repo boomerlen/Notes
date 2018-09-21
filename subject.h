@@ -1,4 +1,4 @@
-#pragma #ifndef subject_H
+#ifndef subject_H
 #define subject_H
 enum subjects{
   S_MATHS_HL,

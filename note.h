@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#pragma #ifndef note_H
+#ifndef note_H
 #define note_H
 
 class note
