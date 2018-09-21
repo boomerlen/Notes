@@ -5,8 +5,6 @@
 #include <vector>
 #include "subject.h"
 
-using namespace std;
-
 #ifndef note_H
 #define note_H
 
