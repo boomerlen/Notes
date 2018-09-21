@@ -1,6 +1,4 @@
 // Note.h - header file for parent "note" Class
-
-#include <iostream>
 #include <string>
 #include <vector>
 #include "subject.h"
