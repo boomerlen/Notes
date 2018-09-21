@@ -3,6 +3,7 @@
 #include "subject.h"
 #include "note.h"
 #include <string>
+#include <vector>
 
 note::note(string loc, string n, subject s)
 {
