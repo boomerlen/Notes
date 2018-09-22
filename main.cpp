@@ -6,7 +6,6 @@
 
 #include <iostream>
 #include "note.h"
-#include "note.cpp"
 #include "subject.h"
 
 using namespace std;

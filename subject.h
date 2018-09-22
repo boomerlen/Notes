@@ -17,7 +17,7 @@ enum subjects{
   S_MUSIC,
   S_MISC,
   S_UNDEFINED
-}
+};
 
 
 #endif /* end of include guard:  */
