@@ -89,17 +89,22 @@ vector<note> initNotesVector()
     }
     else if(count == 3)
     {
-      // TAGS
+      // TAGS - BUG, only last tag is recorded from file
       string tempStr = buffer;
       char buf[2];
+      cout << "line 95" << tempStr << endl;
       while(tempStr.size() > 1)
       {
-        size_t lastComma = tempStr.find_last_of(",");
-        tempStr.copy(buf, 1, lastComma+1); // Error here
-        tempStr = tempStr.substr(0, lastComma-1);
+        cout << "line 98" << tempStr << endl;
+        size_t lastComma = tempStr.rfind(",");
+        tempStr.copy(buf, 1, lastComma+1);
+        tempStr = tempStr.substr(0, lastComma);
+        cout << "line 102" << tempStr << endl;
+        cout << buf << endl;
         TempNote.addTag(stoi(buf));
       }
-      TempNote.addTag(stoi(buf));
+      TempNote.addTag(stoi(tempStr));
+      cout << buf << endl;
       tempNoteVector.push_back(TempNote);
       count = 0;
     }
@@ -123,6 +128,11 @@ int main()
   }
   cout << noteList[0].getName() << endl;
   cout << noteList[1].getName() << endl;
+
+  vector<int> t = noteList[0].getTags();
+  cout << t[0] << endl;
+  cout << t[1] << endl;
+  cout << t[2] << endl;
 
   return 0;
 
