@@ -51,31 +51,33 @@ bool tagAdd(string tag) // Function for adding a tag to the tag file.
 
 vector<note> initNotesVector()
 {
-  vector<notes> tempNoteVector;
+  vector<note> tempNoteVector;
 
   ifstream file;
   file.open(NOTE_OUTLINE_ADDR, ios::in);
-  if(!file.is_open)
+  if(!file.is_open())
   {
     cout << "Could not open " << NOTE_OUTLINE_ADDR << endl;
     return tempNoteVector;
   }
   string buffer;
   int count = 0;
-  while(getline(file, buffer, ";"))
+  note TempNote;
+  while(getline(file, buffer, ';'))
   {
     if(count == 0)
     {
       // Beginning of line: Note name and init the object
-      note TempNote;
       TempNote.setName(buffer);
+      count++;
     }
-    if(count == 1)
+    else if(count == 1)
     {
       // Address
       TempNote.setLocation(buffer);
+      count++;
     }
-    if(count == 2)
+    else if(count == 2)
     {
       // Subjects
       stringstream str(buffer);
@@ -83,20 +85,21 @@ vector<note> initNotesVector()
       str >> x;
       subjects sub = static_cast<subjects>(x);
       TempNote.setSubject(sub);
+      count++;
     }
-    if(count == 3)
+    else if(count == 3)
     {
-      // TAGS -- NOTE THIS IS MESSY - PROBABLY MANY BUGS HERE
+      // TAGS
       string tempStr = buffer;
-      char buf;
-      while(tempStr.size > 1)
+      char buf[2];
+      while(tempStr.size() > 1)
       {
         size_t lastComma = tempStr.find_last_of(",");
-        tempStr.copy(buf, 1, lastComma+1);
-        tempStr = tempStr.substring(0, lastComma-1);
-        TempNote.addTag(int(buf));
+        tempStr.copy(buf, 1, lastComma+1); // Error here
+        tempStr = tempStr.substr(0, lastComma-1);
+        TempNote.addTag(stoi(buf));
       }
-      TempNote.addTag(int(buf));
+      TempNote.addTag(stoi(buf));
       tempNoteVector.push_back(TempNote);
       count = 0;
     }
@@ -108,9 +111,18 @@ int main()
 {
   cout << "Hello World!" << endl;
 
-  map<int, string> tagDef = initTagDef();
+  /*map<int, string> tagDef = initTagDef();
   if(tagDef.empty())
     return 1;
+  */
+  vector<note> noteList = initNotesVector();
+  if(noteList.empty())
+  {
+    cout << "Notelist empty" << endl;
+    return 1;
+  }
+  cout << noteList[0].getName() << endl;
+  cout << noteList[1].getName() << endl;
 
   return 0;
 
