@@ -20,14 +20,14 @@ void note::setLocation(string loc)
   return;
 }
 
-void note::setName(string n = "")
+void note::setName(string n /*""*/)
 {
   if(n == "")
   {
     // Set it equal to the end of the location
-    string key = '\\';
+    string key = "\\";
     size_t pos = location.rfind(key);
-    char[32] buffer;
+    char buffer[32];
     name = location.copy(buffer, 32, pos);
     return;
   }
@@ -35,7 +35,7 @@ void note::setName(string n = "")
   return;
 }
 
-void note::setSubject(subjects s);
+void note::setSubject(subjects s)
 {
   sub = s;
   return;
@@ -43,7 +43,7 @@ void note::setSubject(subjects s);
 
 void note::addTag(int tag)
 {
-  std::tags.push_back(tag);
+  tags.push_back(tag);
   return;
 }
 

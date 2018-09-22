@@ -9,7 +9,7 @@
 class note
 {
 public:
-  note(std::string loc, std::string n, subjects s);
+  note(std::string loc = "", std::string n = "", subjects s = S_UNDEFINED);
 
   void setLocation(std::string loc);
   void setName(std::string n = "");

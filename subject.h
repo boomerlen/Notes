@@ -15,7 +15,8 @@ enum subjects{
   S_ENG_ELECT,
   S_CD,
   S_MUSIC,
-  S_MISC
+  S_MISC,
+  S_UNDEFINED
 }
 
 
