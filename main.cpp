@@ -92,19 +92,15 @@ vector<note> initNotesVector()
       // TAGS - BUG, only last tag is recorded from file
       string tempStr = buffer;
       char buf[2];
-      cout << "line 95" << tempStr << endl;
       while(tempStr.size() > 1)
       {
-        cout << "line 98" << tempStr << endl;
         size_t lastComma = tempStr.rfind(",");
         tempStr.copy(buf, 1, lastComma+1);
         tempStr = tempStr.substr(0, lastComma);
-        cout << "line 102" << tempStr << endl;
-        cout << buf << endl;
         TempNote.addTag(stoi(buf));
       }
       TempNote.addTag(stoi(tempStr));
-      cout << buf << endl;
+
       tempNoteVector.push_back(TempNote);
       count = 0;
     }
