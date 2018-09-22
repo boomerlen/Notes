@@ -11,7 +11,7 @@
 #include "note.h"
 #include "subject.h"
 
-#define TAG_ADDR "storage/tags.txt"
+#define TAG_ADDR "C:\\Users\\Hugo Sebesta\\Documents\\GitHub\\Notes\\storage\\tags.txt"
 
 using namespace std;
 
@@ -23,13 +23,13 @@ map<int, string> initTagDef() // Function for reading from a tag file
   if(!file.is_open())
   {
     cout << "Error opening " << TAG_ADDR << endl;
-    return;
+    return mapTemp;
   }
   string line;
   int count = 0; // NOTE THAT TAGS START AT 0 THOUGH MAP SIZES AT 1
   while(getline(file, line))
   {
-    map[count] = line;
+    mapTemp[count] = line;
     count++;
   }
   file.close();
@@ -52,10 +52,9 @@ int main()
   cout << "Hello World!" << endl;
 
   map<int, string> tagDef = initTagDef();
-  for(int i = 0; i < (tagDef.size() - 1); i++)
-  {
-    cout << tagDef[i] << endl;
-  }
+  if(tagDef.empty())
+    return 1;
+
   return 0;
 
 }
