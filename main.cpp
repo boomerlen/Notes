@@ -111,24 +111,17 @@ vector<note> initNotesVector()
 int main()
 {
   cout << "Hello World!" << endl;
-
-  /*map<int, string> tagDef = initTagDef();
+  // Init and debug
+  map<int, string> tagDef = initTagDef();
   if(tagDef.empty())
     return 1;
-  */
+
   vector<note> noteList = initNotesVector();
   if(noteList.empty())
   {
     cout << "Notelist empty" << endl;
     return 1;
   }
-  cout << noteList[0].getName() << endl;
-  cout << noteList[1].getName() << endl;
-
-  vector<int> t = noteList[0].getTags();
-  cout << t[0] << endl;
-  cout << t[1] << endl;
-  cout << t[2] << endl;
 
   return 0;
 
