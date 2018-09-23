@@ -5,6 +5,9 @@
 */
 
 #include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
 #include "note.h"
 #include "note.cpp"
 #include "subject.h"
