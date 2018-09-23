@@ -110,6 +110,17 @@ vector<note> initNotesVector()
   return tempNoteVector;
 }
 
+vector<note> initSubjectVector(subject s, vector<note> Notes) // Returns vector of notes of subject s
+{
+  vector<note> correctNotes;
+  for(vector<note>::iterator it = correctNotes.begin(); it != correctNotes.end(); it++)
+  {
+      if(it->getSubject() == s)
+        correctNotes.push_back(*it);
+  }
+  return correctNotes;
+}
+
 int main()
 {
   cout << "Hello World!" << endl;
