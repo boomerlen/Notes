@@ -17,10 +17,7 @@ using namespace std;
 int main()
 {
   cout << "Hello World!" << endl;
-  note TextFile;
-  TextFile.setName("TextFile");
 
-  cout << TextFile.getName() << endl;
   return 0;
 
 }

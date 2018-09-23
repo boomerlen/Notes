@@ -1,16 +1,17 @@
 // Note.cpp
 
-#include "subject.h"
-#include "note.h"
 #include <string>
 #include <vector>
+#include "subject.h"
+#include "note.h"
 
-note::note(string loc, string n, subject s)
+using namespace std;
+
+note::note(string loc, string n, subjects s)
 {
   location = loc;
   name = n;
   sub = s;
-  return note;
 }
 
 void note::setLocation(string loc)
@@ -19,14 +20,14 @@ void note::setLocation(string loc)
   return;
 }
 
-void note::setName(string n = "")
+void note::setName(string n /*""*/)
 {
   if(n == "")
   {
     // Set it equal to the end of the location
-    string key = '\\';
+    string key = "\\";
     size_t pos = location.rfind(key);
-    char[32] buffer;
+    char buffer[32];
     name = location.copy(buffer, 32, pos);
     return;
   }
@@ -34,7 +35,7 @@ void note::setName(string n = "")
   return;
 }
 
-void note::setSubject(subject s);
+void note::setSubject(subjects s)
 {
   sub = s;
   return;
@@ -51,12 +52,12 @@ string note::getName()
   return name;
 }
 
-subject note::getSubject()
+subjects note::getSubject()
 {
   return sub;
 }
 
-vector note::getTags()
+std::vector<int> note::getTags()
 {
   return tags;
 }

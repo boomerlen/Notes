@@ -13,3 +13,10 @@ LATER support more note types, including (hopefully) Word and PDF, once I'm up t
 Subjects will be hardcoded in. Maybe one day if this becomes like actually proper Ill change that but for now thats fine. Enum for this is in subjects.h
 Will include tags for both this year and next year's subjects, depending on when this actually becomes usable.
 Each file will contain all of its category and tag information, but it will also be stored in a directory file that will contain all of this information for easier access
+
+
+Directory system:
+One file will contain all the members for "note" per note so the long term storage does exist.
+Initialisation will consist of taking all the tags from their file and placing them onto RAM,
+Taking all the note objects and placing them on RAM,
+Creating vectors for all of the notes of each subject

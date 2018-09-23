@@ -3,29 +3,28 @@
 #include <vector>
 #include "subject.h"
 
-#ifndef note_H
-#define note_H
+#ifndef NOTE_H
+#define NOTE_H
 
 class note
 {
 public:
-  note(string, string, subject);
+  note(std::string loc = "", std::string n = "", subjects s = S_UNDEFINED);
 
-  void setLocation(string);
-  void setName(string = "");
-  void setSubject(subject);
-  void addTag(int);
+  void setLocation(std::string loc);
+  void setName(std::string n = "");
+  void setSubject(subjects s);
+  void addTag(int tag);
 
-  string getName();
-  subject getSubject();
-  vector getTags();
+  std::string getName();
+  subjects getSubject();
+  std::vector<int> getTags();
 
   void removeTag(int);
-  ~note();
 private:
-  string location;
-  string name;
-  subject sub;
-  vector tags; // Notes can have tags, each have an int ID. IDs are going to be resolved by reading from a seperate file detailing These
-}
+  std::string location;
+  std::string name;
+  subjects sub;
+  std::vector<int> tags; // Notes can have tags, each have an int ID. IDs are going to be resolved by reading from a seperate file detailing These
+};
 #endif /* end of include guard:  */
