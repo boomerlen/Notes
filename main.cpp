@@ -10,6 +10,7 @@
 #include <fstream>
 #include <map>
 #include <sstream>
+#include <algorithm>
 
 #include "note.h"
 #include "subject.h"
@@ -152,6 +153,51 @@ int main()
   {
     cout << "Notelist empty" << endl;
     return 1;
+  }
+
+  // Initialise lists for each subject.
+  // Tags first
+  vector< vector<*note> > noteTagVector; // This logic is probably kinda fucked
+  for(int i = 0; i < tagDef.size(); i++)
+  {
+    noteTagVector[i] = initTagVector(i, &noteList);
+  }
+
+  vector< vector<*note> > noteSubjectVector; // Note that subjects follow their cast in enum
+  for(int i = 0; i < 15 /* hard coded */; i++)
+  {
+    noteSubjectVector[i] = initSubjectVector(i, &noteList);
+  }
+
+  /*  Now have these containers:
+  *   map<int, string> tagDef
+  *   vector<note> noteLIst
+  *   vector< vector<*note> > noteTagVector
+  *   vector< vector<*note> > noteSubjectVector
+  */
+
+  // Basic Console-Based UI
+  string input;
+  while(1)
+  {
+    cout << "> ";
+    cin >> input;
+    transform(input.begin(), input.end(), input.begin(), ::tolower); // Case doesn't matter
+    switch(input)
+    {
+      case "h":
+      case "help":
+      case "?":
+      case "wtf":
+        cout << "> Help Dialogue, Commands:" << endl;
+        cout << "> add note: Adds a note to the list" << endl;
+        cout << "> add tag: Adds a tag to the database" << endl;
+        cout << "> edit note: Edits information on a note including adding or removing tags" << endl;
+        cout << "> display [notename]: Displays information for a specific note" << endl;
+        cout << "> subject [subject]: Displays all notes (names) that fall under that subject" << endl;
+        cout << "> tag [tag]: Displays all notes (names) that have that tag" << endl;
+        break;
+    }
   }
 
   return 0;
