@@ -157,13 +157,13 @@ int main()
 
   // Initialise lists for each subject.
   // Tags first
-  vector< vector<*note> > noteTagVector; // This logic is probably kinda fucked
+  vector<*note>  noteTagVector[tagDef.size]; // Array of vectors
   for(int i = 0; i < tagDef.size(); i++)
   {
     noteTagVector[i] = initTagVector(i, &noteList);
   }
 
-  vector< vector<*note> > noteSubjectVector; // Note that subjects follow their cast in enum
+  vector<*note> noteSubjectVector[15]; // Note that subjects follow their cast in enum
   for(int i = 0; i < 15 /* hard coded */; i++)
   {
     noteSubjectVector[i] = initSubjectVector(static_cast<subjects>(i), &noteList);
