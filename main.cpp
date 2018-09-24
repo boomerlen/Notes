@@ -121,6 +121,24 @@ vector<note> initSubjectVector(subject s, vector<note> *Notes) // Returns vector
   return correctNotes;
 }
 
+vector<note> initTagVector(int t, vector<note> *Notes) // Returns vector of notes with subject id t
+{// Could have errors with pointers cuz i still don't quite understand how to use them lol
+  vector<note> correctNotes;
+  for(vector<note>::iterator it = Notes->begin(); it != Notes->end(); it++)
+  {
+    vector<int> *ts = &it->getTags();
+    for(vector<int>::iterator it2 = ts->begin(); it2 != ts->end(); it2++)
+    {
+      if(it2 == t)
+      {
+        correctNotes.push_back(&Notes);
+        break;
+      }
+    }
+  }
+  return correctNotes;
+}
+
 int main()
 {
   cout << "Hello World!" << endl;
