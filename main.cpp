@@ -166,7 +166,7 @@ int main()
   vector< vector<*note> > noteSubjectVector; // Note that subjects follow their cast in enum
   for(int i = 0; i < 15 /* hard coded */; i++)
   {
-    noteSubjectVector[i] = initSubjectVector(sttatic_cast<subjects>(i), &noteList);
+    noteSubjectVector[i] = initSubjectVector(static_cast<subjects>(i), &noteList);
   }
 
   /*  Now have these containers:
