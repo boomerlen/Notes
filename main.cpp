@@ -111,7 +111,7 @@ vector<note> initNotesVector()
   return tempNoteVector;
 }
 
-vector<note> initSubjectVector(subject s, vector<note> *Notes) // Returns vector of notes of subject s
+vector<note> initSubjectVector(subjects s, vector<note> *Notes) // Returns vector of notes of subject s
 {
   vector<note> correctNotes;
   for(vector<note>::iterator it = Notes->begin(); it != Notes->end(); it++)
@@ -166,7 +166,7 @@ int main()
   vector< vector<*note> > noteSubjectVector; // Note that subjects follow their cast in enum
   for(int i = 0; i < 15 /* hard coded */; i++)
   {
-    noteSubjectVector[i] = initSubjectVector(i, &noteList);
+    noteSubjectVector[i] = initSubjectVector(sttatic_cast<subjects>(i), &noteList);
   }
 
   /*  Now have these containers:
@@ -183,20 +183,15 @@ int main()
     cout << "> ";
     cin >> input;
     transform(input.begin(), input.end(), input.begin(), ::tolower); // Case doesn't matter
-    switch(input)
+    if(input == "h" | input == "help" | input == "?")
     {
-      case "h":
-      case "help":
-      case "?":
-      case "wtf":
-        cout << "> Help Dialogue, Commands:" << endl;
-        cout << "> add note: Adds a note to the list" << endl;
-        cout << "> add tag: Adds a tag to the database" << endl;
-        cout << "> edit note: Edits information on a note including adding or removing tags" << endl;
-        cout << "> display [notename]: Displays information for a specific note" << endl;
-        cout << "> subject [subject]: Displays all notes (names) that fall under that subject" << endl;
-        cout << "> tag [tag]: Displays all notes (names) that have that tag" << endl;
-        break;
+      cout << "> Help Dialogue, Commands:" << endl;
+      cout << "> add note: Adds a note to the list" << endl;
+      cout << "> add tag: Adds a tag to the database" << endl;
+      cout << "> edit note: Edits information on a note including adding or removing tags" << endl;
+      cout << "> display [notename]: Displays information for a specific note" << endl;
+      cout << "> subject [subject]: Displays all notes (names) that fall under that subject" << endl;
+      cout << "> tag [tag]: Displays all notes (names) that have that tag" << endl;
     }
   }
 
