@@ -183,7 +183,7 @@ int main()
     cout << "> ";
     cin >> input;
     transform(input.begin(), input.end(), input.begin(), ::tolower); // Case doesn't matter
-    if(input == "h" | input == "help" | input == "?")
+    if(input == "h" || input == "help" || input == "?")
     {
       cout << "> Help Dialogue, Commands:" << endl;
       cout << "> add note: Adds a note to the list" << endl;
