@@ -11,6 +11,7 @@
 #include <map>
 #include <sstream>
 #include <algorithm>
+#include <windows.h> // Good luck linking this
 
 #include "note.h"
 #include "subject.h"
@@ -192,14 +193,69 @@ int main()
       cout << "> display [notename]: Displays information for a specific note" << endl;
       cout << "> subject [subject]: Displays all notes (names) that fall under that subject" << endl;
       cout << "> tag [tag]: Displays all notes (names) that have that tag" << endl;
+      cout << "> list tags: Lists tags in the database" << endl;
+      cout << "> list subjects: Lists subjects in the database" << endl;
+      cout << "> (q)uit: Exits the program" << endl;
     }
     else if(input == "add note")
     {
-      string n_name;
+      string in_name;
+      string in_sub;
+      string in_file_addr;
+
+      note new_note;
+
       cout << "> Note Add Dialogue:" << endl;
       cout << "> Specify a name for the note: ";
-      cin >> n_name;
-      cout << "> Specify a subject for "
+      cin >> in_name;
+
+      do {
+        cout << "> Specify a subject for " << in_name << " by specifying the number of the subject you would like, or typing ? to list the subjects: ";
+        cin >> in_sub;
+        if(in_sub == "?")
+        {
+          // List subjects
+          for(int i = 0; i < 16; i++)
+          {
+            cout << i << ": ";
+            cout << static_cast<subjects>(i) << endl;
+          }
+        }
+      } while(in_sub == "?");
+      int i_sub = atoi(in_sub);
+
+      ofstream testFile;
+      cout << "Specify the address of the file: "
+      cin >> in_file_addr;
+      while(!testFile.is_open()) // Make sure file exists
+      {
+        cout << "Could not open file. Specify a new file name: ";
+        cin >> in_file_addr;
+      }
+      testFile.close();
+      string new_file_addr = "notes\\" + in_name;
+
+      if(!CopyFile(in_file_addr, new_file_addr, false))
+        cout << "ERROR LINE 237";
+
+      new_note.setName(in_name);
+      new_note.setSubject(static_cast<subjects>(in_sub));
+      new_note.setLocation(in_file_addr);
+
+      cout << "Would you like to add tags? (y/n): ";
+      cin >> in_name;
+      if(in_name == "y")
+      {
+        vector<int> in_tags;
+        in_name = "";
+        cout << "Enter a new tag ID on each line then type (q)uit to stop." << endl;
+        while(in_name != "q" || in_name != "quit")
+        {
+          cin >> in_name; // This logic is bad
+          in_tags.push_back(atio(in_name));
+        }
+
+      }
     }
   }
 

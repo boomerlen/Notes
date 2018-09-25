@@ -20,4 +20,4 @@ enum subjects{
 };
 
 
-#endif /* end of include guard:  */
+#endif /* end of include guard: subject_H */
