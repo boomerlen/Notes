@@ -193,6 +193,14 @@ int main()
       cout << "> subject [subject]: Displays all notes (names) that fall under that subject" << endl;
       cout << "> tag [tag]: Displays all notes (names) that have that tag" << endl;
     }
+    else if(input == "add note")
+    {
+      string n_name;
+      cout << "> Note Add Dialogue:" << endl;
+      cout << "> Specify a name for the note: ";
+      cin >> n_name;
+      cout << "> Specify a subject for "
+    }
   }
 
   return 0;
