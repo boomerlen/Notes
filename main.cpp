@@ -111,28 +111,28 @@ vector<note> initNotesVector()
   return tempNoteVector;
 }
 
-vector<note> initSubjectVector(subjects s, vector<note> *Notes) // Returns vector of notes of subject s
+vector<note *> initSubjectVector(subjects s, vector<note> *Notes) // Returns vector of notes of subject s
 {
-  vector<note> correctNotes;
+  vector<note *> correctNotes;
   for(vector<note>::iterator it = Notes->begin(); it != Notes->end(); it++)
   {
       if(it->getSubject() == s)
-        correctNotes.push_back(*it);
+        correctNotes.push_back(&*it);
   }
   return correctNotes;
 }
 
-vector<note> initTagVector(int t, vector<note> *Notes) // Returns vector of notes with subject id t
+vector<note *> initTagVector(int t, vector<note> *Notes) // Returns vector of notes with subject id t
 {// Could have errors with pointers cuz i still don't quite understand how to use them lol
-  vector<note> correctNotes;
+  vector<note *> correctNotes;
   for(vector<note>::iterator it = Notes->begin(); it != Notes->end(); it++)
   {
-    vector<int> *ts = &it->getTags();
-    for(vector<int>::iterator it2 = ts->begin(); it2 != ts->end(); it2++)
+    vector<int> ts = it->getTags();
+    for(vector<int>::iterator it2 = ts.begin(); it2 != ts.end(); it2++)
     {
-      if(it2 == t)
+      if(*it2 == t)
       {
-        correctNotes.push_back(&Notes);
+        correctNotes.push_back(&*it);
         break;
       }
     }
