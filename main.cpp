@@ -251,11 +251,13 @@ int main()
         cout << "Enter a new tag ID on each line then type (q)uit to stop." << endl;
         while(in_name != "q" || in_name != "quit")
         {
-          cin >> in_name; // This logic is bad
-          in_tags.push_back(atio(in_name));
+          cin >> in_name;
+          new_note.addTag(atio(in_name));
         }
 
       }
+      cout << "Added " << new_note.getName() << endl;
+      noteList.push_back(new_note);
     }
   }
 
