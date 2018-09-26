@@ -141,6 +141,11 @@ vector<note *> initTagVector(int t, vector<note> *Notes) // Returns vector of no
   return correctNotes;
 }
 
+void addNote(note *n)
+{
+  
+}
+
 int main()
 {
   cout << "Hello World!" << endl;
