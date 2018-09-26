@@ -61,3 +61,8 @@ std::vector<int> note::getTags()
 {
   return tags;
 }
+
+std::string note::getLocation()
+{
+  return location;
+}

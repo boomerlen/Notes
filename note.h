@@ -19,6 +19,7 @@ public:
   std::string getName();
   subjects getSubject();
   std::vector<int> getTags();
+  std::string getLocation();
 
   void removeTag(int);
 private:

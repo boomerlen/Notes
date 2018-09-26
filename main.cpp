@@ -141,9 +141,23 @@ vector<note *> initTagVector(int t, vector<note> *Notes) // Returns vector of no
   return correctNotes;
 }
 
-void addNote(note *n)
+bool addNote(note *n)
 {
-  
+  ifstream file;
+  file.open(NOTE_OUTLINE_ADDR, ios::in | ios::app);
+  if(!file.is_open())
+  {
+    cout << "Could not open " << NOTE_OUTLINE_ADDR << endl;
+    return false;
+  }
+
+  file << n->getName() << ";";
+  file << n->getLocation() << ";";
+  file << static_cast<int>(n->getSubject()) << ";";
+  for(int i = 0; i < n->getTags().size(); i++)
+  {
+    file << n->getTags()[i] << ","; // fix this
+  }
 }
 
 int main()
