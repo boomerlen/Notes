@@ -11,7 +11,7 @@
 #include <map>
 #include <sstream>
 #include <algorithm>
-#include <windows.h> // Good luck linking this
+//#include <windows.h> // Good luck linking this
 
 #include "note.h"
 #include "subject.h"
@@ -241,10 +241,10 @@ int main()
           }
         }
       } while(in_sub == "?");
-      int i_sub = atoi(in_sub);
+      int i_sub = stoi(in_sub);
 
       ofstream testFile;
-      cout << "Specify the address of the file: "
+      cout << "Specify the address of the file: ";
       cin >> in_file_addr;
       while(!testFile.is_open()) // Make sure file exists
       {
@@ -254,11 +254,11 @@ int main()
       testFile.close();
       string new_file_addr = "notes\\" + in_name;
 
-      if(!CopyFile(in_file_addr, new_file_addr, false))
-        cout << "ERROR LINE 237";
+      //if(!CopyFile(in_file_addr, new_file_addr, false))
+      //  cout << "ERROR LINE 237";
 
       new_note.setName(in_name);
-      new_note.setSubject(static_cast<subjects>(in_sub));
+      new_note.setSubject(static_cast<subjects>(stoi(in_sub)));
       new_note.setLocation(in_file_addr);
 
       cout << "Would you like to add tags? (y/n): ";
@@ -271,7 +271,7 @@ int main()
         while(in_name != "q" || in_name != "quit")
         {
           cin >> in_name;
-          new_note.addTag(atio(in_name));
+          new_note.addTag(stoi(in_name));
         }
 
       }
