@@ -93,7 +93,6 @@ vector<note> initNotesVector()
     }
     else if(count == 3)
     {
-      // TAGS - BUG, only last tag is recorded from file
       string tempStr = buffer;
       char buf[2];
       while(tempStr.size() > 1)
@@ -197,8 +196,12 @@ int main()
   *   vector< vector<*note> > noteSubjectVector
   */
 
+  // Not gonna lie this console based UI is a pain in the fucken neck I feel like I'd have less touble with
+  // a GUI
+
   // Basic Console-Based UI
   string input;
+  /*
   while(1)
   {
     cout << "> ";
@@ -280,7 +283,7 @@ int main()
       noteList.push_back(new_note);
     }
   }
-
+  */
   return 0;
 
 }
