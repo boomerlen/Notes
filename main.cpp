@@ -11,8 +11,11 @@
 #include <map>
 #include <sstream>
 #include <algorithm>
-//#include <windows.h> // Good luck linking this
 
+// Not STL
+#include <windows.h>
+
+// My files
 #include "note.h"
 #include "subject.h"
 
