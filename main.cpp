@@ -16,8 +16,8 @@
 #include "note.h"
 #include "subject.h"
 
-#define TAG_ADDR "C:\\Users\\Hugo Sebesta\\Documents\\GitHub\\Notes\\storage\\tags.txt"
-#define NOTE_OUTLINE_ADDR "C:\\Users\\Hugo Sebesta\\Documents\\GitHub\\Notes\\storage\\notes.txt"
+#define TAG_ADDR "..\\storage\\tags.txt"
+#define NOTE_OUTLINE_ADDR "..\\storage\\notes.txt"
 
 using namespace std;
 
@@ -143,8 +143,8 @@ vector<note *> initTagVector(int t, vector<note> *Notes) // Returns vector of no
 
 bool addNote(note *n)
 {
-  ifstream file;
-  file.open(NOTE_OUTLINE_ADDR, ios::in | ios::app);
+  ofstream file;
+  file.open(NOTE_OUTLINE_ADDR, ios::out | ios::app);
   if(!file.is_open())
   {
     cout << "Could not open " << NOTE_OUTLINE_ADDR << endl;
@@ -156,7 +156,8 @@ bool addNote(note *n)
   file << static_cast<int>(n->getSubject()) << ";";
   for(int i = 0; i < n->getTags().size(); i++)
   {
-    file << n->getTags()[i] << ","; // fix this
+    int l = n->getTags()[i];
+    file << l << ","; // fix this
   }
 }
 
