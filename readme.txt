@@ -20,3 +20,6 @@ One file will contain all the members for "note" per note so the long term stora
 Initialisation will consist of taking all the tags from their file and placing them onto RAM,
 Taking all the note objects and placing them on RAM,
 Creating vectors for all of the notes of each subject
+
+
+I'm not using GTK for the GUI, I'm just going to use windows headers and brute force my way through it
