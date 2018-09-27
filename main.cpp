@@ -141,7 +141,7 @@ vector<note *> initTagVector(int t, vector<note> *Notes) // Returns vector of no
   return correctNotes;
 }
 
-bool addNote(note *n)
+bool addNoteToFile(note *n)
 {
   ofstream file;
   file.open(NOTE_OUTLINE_ADDR, ios::out | ios::app);
