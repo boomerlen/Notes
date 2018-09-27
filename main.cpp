@@ -202,7 +202,7 @@ int main()
   while(1)
   {
     cout << "> ";
-    cin >> input;
+    getline(cin, input);
     transform(input.begin(), input.end(), input.begin(), ::tolower); // Case doesn't matter
     if(input == "h" || input == "help" || input == "?")
     {
@@ -227,7 +227,7 @@ int main()
 
       cout << "> Note Add Dialogue:" << endl;
       cout << "> Specify a name for the note: ";
-      cin >> in_name;
+      getline(cin, in_name);
 
       do {
         cout << "> Specify a subject for " << in_name << " by specifying the number of the subject you would like, or typing ? to list the subjects: ";
@@ -246,11 +246,11 @@ int main()
 
       ofstream testFile;
       cout << "Specify the address of the file: ";
-      cin >> in_file_addr;
+      getline(cin, in_file_addr);
       while(!testFile.is_open()) // Make sure file exists
       {
         cout << "Could not open file. Specify a new file name: ";
-        cin >> in_file_addr;
+        getline(cin, in_file_addr);
       }
       testFile.close();
       string new_file_addr = "notes\\" + in_name;
