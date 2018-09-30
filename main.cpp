@@ -220,13 +220,13 @@ int main()
   */
 
   // Testing addNoteToFile
-  note p_note* = new note("loc.txt", "notenotenote", S_MATHS_HL);
+  note *p_note = new note("loc.txt", "notenotenote", S_MATHS_HL);
   p_note->addTag(1);
   p_note->addTag(3);
   p_note->addTag(2);
 
-  addNote(p);
-  delete p;
+  addNote(p_note);
+  delete p_note;
 
   // Not gonna lie this console based UI is a pain in the fucken neck I feel like I'd have less touble with
   // a GUI
