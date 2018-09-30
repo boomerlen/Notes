@@ -161,6 +161,7 @@ bool addNoteToFile(note *n)
     int l = n->getTags()[i];
     file << l << ","; // fix this
   }
+  return true;
 }
 
 int main()
