@@ -21,6 +21,9 @@
 
 #define TAG_ADDR "..\\storage\\tags.txt"
 #define NOTE_OUTLINE_ADDR "..\\storage\\notes.txt"
+#define NOTE_STORAGE_ADDR "..\\notes"
+
+#define DEL_OLD_NOTE false
 
 using namespace std;
 
@@ -164,6 +167,22 @@ bool addNoteToFile(note *n)
   return true;
 }
 
+bool addNote(note *n) // Sticks note on file and moves it to local dir
+{
+  if(!addNoteToFile(n))
+    return false;
+
+  string newLoc = NOTE_STORAGE_ADDR + n->getName();
+  CopyFile(n->getLocation(), newLoc, false); // old addr, new addr, whether or not to get mad if its still there
+
+  if(DEL_OLD_NOTE)
+  {
+    // Windows code to delete the old file
+  }
+
+  return true;
+}
+
 int main()
 {
   cout << "Hello World!" << endl;
@@ -199,6 +218,14 @@ int main()
   *   vector< vector<*note> > noteTagVector
   *   vector< vector<*note> > noteSubjectVector
   */
+
+  // Testing addNoteToFile
+  note p_note* = new note("loc.txt", "notenotenote", S_MATHS_HL);
+  p_note->addTag(1);
+  p_note->addTag(3);
+  p_note->addTag(2);
+
+  addNote()
 
   // Not gonna lie this console based UI is a pain in the fucken neck I feel like I'd have less touble with
   // a GUI
