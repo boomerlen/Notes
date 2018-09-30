@@ -13,7 +13,7 @@
 #include <algorithm>
 
 // Not STL
-#include <windows.h> 
+#include <windows.h>
 
 // My files
 #include "note.h"
@@ -203,7 +203,7 @@ int main()
   // a GUI
 
   // Basic Console-Based UI
-  string input;
+  //string input;
   /*
   while(1)
   {
