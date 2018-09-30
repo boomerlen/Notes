@@ -225,7 +225,8 @@ int main()
   p_note->addTag(3);
   p_note->addTag(2);
 
-  addNote()
+  addNote(p);
+  delete p;
 
   // Not gonna lie this console based UI is a pain in the fucken neck I feel like I'd have less touble with
   // a GUI
