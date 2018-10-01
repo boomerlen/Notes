@@ -178,7 +178,7 @@ bool addNote(note *n) // Sticks note on file and moves it to local dir
   if(DEL_OLD_NOTE)
   {
     // Windows code to delete the old file
-    DeleteFileA(n->getlocation().c_str());
+    DeleteFileA(n->getLocation().c_str());
     // Makes no sense to retain old file location
     n->setLocation("");
   }
