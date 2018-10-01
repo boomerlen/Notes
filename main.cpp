@@ -178,6 +178,9 @@ bool addNote(note *n) // Sticks note on file and moves it to local dir
   if(DEL_OLD_NOTE)
   {
     // Windows code to delete the old file
+    DeleteFileA(n->getlocation().c_str());
+    // Makes no sense to retain old file location
+    n->setLocation("");
   }
 
   return true;
@@ -220,6 +223,7 @@ int main()
   */
 
   // Testing addNoteToFile
+  /* Works like a dream
   note *p_note = new note("loc.txt", "notenotenote", S_MATHS_HL);
   p_note->addTag(1);
   p_note->addTag(3);
@@ -227,6 +231,7 @@ int main()
 
   addNote(p_note);
   delete p_note;
+  */
 
   // Not gonna lie this console based UI is a pain in the fucken neck I feel like I'd have less touble with
   // a GUI
