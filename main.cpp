@@ -173,7 +173,7 @@ bool addNote(note *n) // Sticks note on file and moves it to local dir
     return false;
 
   string newLoc = NOTE_STORAGE_ADDR + n->getName();
-  CopyFile(n->getLocation(), newLoc, false); // old addr, new addr, whether or not to get mad if its still there
+  CopyFile(n->getLocation().c_str(), newLoc.c_str(), false); // old addr, new addr, whether or not to get mad if its still there
 
   if(DEL_OLD_NOTE)
   {
