@@ -23,3 +23,7 @@ Creating vectors for all of the notes of each subject
 
 
 I'm not using GTK for the GUI, I'm just going to use windows headers and brute force my way through it
+
+For the GUI I'm going to have to move over into Visual Studio
+and Visual C++ because otherwise I think it'll be difficult to get the windows headers
+to work properly, So this project is going to branch off in that direction.
