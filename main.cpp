@@ -14,6 +14,7 @@
 
 // Not STL
 #include <windows.h>
+#include <gtk/gtk.h>
 
 // My files
 #include "note.h"
