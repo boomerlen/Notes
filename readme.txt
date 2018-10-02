@@ -1,3 +1,4 @@
+<h>README</h>
 README for Notes - Text and Note organiser (manager) for school students
 Primary tasks are to organise, sort and collect text files into helpful categories for the user.
 GUI based.
