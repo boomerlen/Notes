@@ -37,3 +37,7 @@ Its ok I fixed it. I stuck a text file wit the pkg-config stuff in it and then a
 Nevermind, doing that compiles for linux (not a .exe) because of course it would its bloody ubuntu bash simulation not Windows
 So i gotta somehow command either the pkg-config thing back into cmd or an cat textfile.text
 Any help would be extremely greatly appreciated.
+
+Using powershell to compile allows me to do command substitution in the form of $(pkg-config gtk+-3.0 --cflags --libs)
+So that could work
+Except that when I do that, g++ complains that what has been parsed from pkg-config is not a valid command line option or something
