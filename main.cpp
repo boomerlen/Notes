@@ -192,9 +192,26 @@ static void activate(GtkApplication* app, gpointer user_data)
   GtkWidget *window;
 
   window = gtk_application_window_new(app);
-  gtk_window_set_title(GTK_WINDOW(window), "Window");
+  gtk_window_set_title(GTK_WINDOW(window), "Notes");
   gtk_window_set_default_size(GTK_WINDOW(window), 200, 200);
   gtk_widget_show_all(window);
+}
+
+void button1clicked()
+{
+  cout << "Button 1 Pressed!" << endl;
+  return;
+}
+
+void button2clicked()
+{
+  cout << "Button 2 pressed!" << endl;
+  return;
+}
+
+void searchbox1search(GtkEntry *entry, gpointer user_data)
+{
+
 }
 
 int main(int argc, char *argv[])
@@ -234,13 +251,35 @@ int main(int argc, char *argv[])
   */
 
   // Windows.h can fuck itself, GTK it is.
-GtkApplication *app;
-int status;
+GtkBuilder *builder; // GTK Objects
+GObject *window;
+GObject *button;
+GObject *searchbox;
+GError *error = NULL;
 
-app = gtk_application_new("com.github.boomerlen.notes", G_APPLICATION_FLAGS_NONE);
-g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
-status = g_application_run(G_APPLICATION(app), argc, argv);
-g_object_unref(app);
+gtk_init(&argc, &argv);
 
-return status;
+builder = gtk_builder_new(); // Using the external XML file to load the UI
+if(gtk_builder_add_from_file(builder, "builder.ui", &error) == 0)
+{
+  cout << "Error loading file: " << error->message << endl;
+  g_clear_error(&error);
+  return 1;
+}
+
+// Connect signal handlers to widgets
+window = gtk_builder_get_object(builder, "window");
+g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+button = gtk_builder_get_object(builder, "button1");
+g_signal_connect(button, "clicked", G_CALLBACK(button1clicked), NULL);
+
+button = gtk_builder_get_object(builder, "button2");
+g_signal_connect(button, "clicked", G_CALLBACK(button2clicked), NULL);
+
+searchbox = gtk_builder_get_object(builder, "searchbox1");
+g_signal_connect(searchbox, "activate", G_CALLBACK(searchbox1search), searchbox);
+
+gtk_main();
+return 0;
 }
