@@ -24,3 +24,16 @@ Creating vectors for all of the notes of each subject
 
 
 Windows headers were too complicated and were going to cause too many issues. Back to GTK
+
+Compiling is an absolute nightmare. I need to use bash to get command substitution to work,
+which means using msys2 for the pkg-config gtk+-3.0 --cflags --libs substitution.
+It's so ridiculously complicated.
+
+The command (inside msys) is g++ -std=c++11 main.cpp note.cpp note.h subject.h -o bin/out `pkg-config gtk+-3.0 --cflags --libs` or `cat gtkInclude.txt` if It cant find it
+
+Except that of course pkg-config doesn't find anything for gtk+-3.0 in msys cuz then my life would be too easy
+
+Its ok I fixed it. I stuck a text file wit the pkg-config stuff in it and then am opening that in msys and its complicated but it works and the commands above
+Nevermind, doing that compiles for linux (not a .exe) because of course it would its bloody ubuntu bash simulation not Windows
+So i gotta somehow command either the pkg-config thing back into cmd or an cat textfile.text
+Any help would be extremely greatly appreciated.
