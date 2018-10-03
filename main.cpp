@@ -187,7 +187,17 @@ bool addNote(note *n) // Sticks note on file and moves it to local dir
   return true;
 }
 
-int main()
+static void activate(GtkApplication* app, gpointer user_data)
+{
+  GtkWidget *window;
+
+  window = gtk_application_window_new(app);
+  gtk_window_set_title(GTK_WINDOW(window), "Window");
+  gtk_window_set_default_size(GTK_WINDOW(window), 200, 200);
+  gtk_widget_show_all(window);
+}
+
+int main(int argc, char **argv)
 {
   cout << "Hello World!" << endl;
   // Init and debug
@@ -224,7 +234,12 @@ int main()
   */
 
   // Windows.h can fuck itself GTK it is.
+  GtkApplication *app;
+  int status;
 
+  app = gtk_application_new("me.something.something", G_APPLICATION_FLAGS_NONE);
+  g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
+  status = g_application_run(G_APPLICATION(app), argc, argv);
   return 0;
 
 }
