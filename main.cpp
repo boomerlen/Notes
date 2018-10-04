@@ -197,7 +197,7 @@ static void activate(GtkApplication* app, gpointer user_data)
   gtk_widget_show_all(window);
 }
 
-void buttonClicked()
+void buttonPressed()
 {
   cout << "Button Clicked!" << endl;
   return;
@@ -242,7 +242,6 @@ int main(int argc, char *argv[])
   // Windows.h can fuck itself, GTK it is.
 GtkBuilder *builder; // GTK Objects
 GObject *window;
-GObject *grid;
 GObject *button;
 GError *error = NULL;
 
@@ -260,10 +259,8 @@ if(gtk_builder_add_from_file(builder, "builder.ui", &error) == 0)
 window = gtk_builder_get_object (builder, "window");
 g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 
-grid = gtk_builder_get_object(builder, "grid");
-
-button = gtk_builder_get_object(builder, "button1");
-g_signal_connect(button, "clicked", G_CALLBACK(buttonClicked), NULL);
+button = gtk_builder_get_object(builder, "button");
+g_signal_connect(button, "clicked", G_CALLBACK(buttonPressed), NULL);
 
 gtk_main();
 return 0;
