@@ -197,21 +197,10 @@ static void activate(GtkApplication* app, gpointer user_data)
   gtk_widget_show_all(window);
 }
 
-void button1clicked()
+void buttonClicked()
 {
-  cout << "Button 1 Pressed!" << endl;
+  cout << "Button Clicked!" << endl;
   return;
-}
-
-void button2clicked()
-{
-  cout << "Button 2 pressed!" << endl;
-  return;
-}
-
-void searchbox1search(GtkEntry *entry, gpointer user_data)
-{
-
 }
 
 int main(int argc, char *argv[])
@@ -253,8 +242,8 @@ int main(int argc, char *argv[])
   // Windows.h can fuck itself, GTK it is.
 GtkBuilder *builder; // GTK Objects
 GObject *window;
+GObject *grid;
 GObject *button;
-GObject *searchbox;
 GError *error = NULL;
 
 gtk_init(&argc, &argv);
@@ -268,17 +257,13 @@ if(gtk_builder_add_from_file(builder, "builder.ui", &error) == 0)
 }
 
 // Connect signal handlers to widgets
-window = gtk_builder_get_object(builder, "window");
-g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+window = gtk_builder_get_object (builder, "window");
+g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
+
+grid = gtk_builder_get_object(builder, "grid");
 
 button = gtk_builder_get_object(builder, "button1");
-g_signal_connect(button, "clicked", G_CALLBACK(button1clicked), NULL);
-
-button = gtk_builder_get_object(builder, "button2");
-g_signal_connect(button, "clicked", G_CALLBACK(button2clicked), NULL);
-
-searchbox = gtk_builder_get_object(builder, "searchbox1");
-g_signal_connect(searchbox, "activate", G_CALLBACK(searchbox1search), searchbox);
+g_signal_connect(button, "clicked", G_CALLBACK(buttonClicked), NULL);
 
 gtk_main();
 return 0;
