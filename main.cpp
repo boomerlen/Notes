@@ -130,7 +130,7 @@ vector<note *> initSubjectVector(subjects s, vector<note> *Notes) // Returns vec
 }
 
 vector<note *> initTagVector(int t, vector<note> *Notes) // Returns vector of notes with subject id t
-{// Could have errors with pointers cuz i still don't quite understand how to use them lol
+{
   vector<note *> correctNotes;
   for(vector<note>::iterator it = Notes->begin(); it != Notes->end(); it++)
   {
@@ -187,22 +187,6 @@ bool addNote(note *n) // Sticks note on file and moves it to local dir
   return true;
 }
 
-static void activate(GtkApplication* app, gpointer user_data)
-{
-  GtkWidget *window;
-
-  window = gtk_application_window_new(app);
-  gtk_window_set_title(GTK_WINDOW(window), "Notes");
-  gtk_window_set_default_size(GTK_WINDOW(window), 200, 200);
-  gtk_widget_show_all(window);
-}
-
-void buttonPressed()
-{
-  cout << "Button Clicked!" << endl;
-  return;
-}
-
 int main(int argc, char *argv[])
 {
   cout << "Hello World!" << endl;
@@ -240,28 +224,6 @@ int main(int argc, char *argv[])
   */
 
   // Windows.h can fuck itself, GTK it is.
-GtkBuilder *builder; // GTK Objects
-GObject *window;
-GObject *button;
-GError *error = NULL;
-
-gtk_init(&argc, &argv);
-
-builder = gtk_builder_new(); // Using the external XML file to load the UI
-if(gtk_builder_add_from_file(builder, "builder.ui", &error) == 0)
-{
-  cout << "Error loading file: " << error->message << endl;
-  g_clear_error(&error);
-  return 1;
-}
-
-// Connect signal handlers to widgets
-window = gtk_builder_get_object (builder, "window");
-g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
-
-button = gtk_builder_get_object(builder, "button");
-g_signal_connect(button, "clicked", G_CALLBACK(buttonPressed), NULL);
-
-gtk_main();
-return 0;
+  // Insert all GTK code here. Note sure what it is right now because I need to spend more time reading docs
+  return 0;
 }
