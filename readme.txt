@@ -52,3 +52,5 @@ This works also because I downloaded the extra .dlls which msys means that we ne
 We wouldn't need them if I could compile it with CMD except that I can't figure out how to substitute the whole pkg-config thing into CMD
 So yeah this works now and that only took quite a long time and effort and mental willpower.
 Ima push this online now and probably take a break, after opening and closing my fancy new GUI a couple of times.
+
+Now I just gotta get GTK to work.
