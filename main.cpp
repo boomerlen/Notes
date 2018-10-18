@@ -1,9 +1,14 @@
+/*
+ *  Notes by Hugo Sebesta - main.cpp
+ *  This is my code not yours, not that you'd probably actually be anyone apart from me anyways
+ *  Though this is on GitHub so maybe
+*/
 #if defined(UNICODE) && !defined(_UNICODE)
     #define _UNICODE
 #elif defined(_UNICODE) && !defined(UNICODE)
     #define UNICODE
 #endif
-// TODO: Finish function on making/reading config files
+// TODO: Finish function on making/reading config files -- bug fix
 
 // STL
 #include <iostream>
@@ -33,15 +38,15 @@
 using namespace std;
 
 // Global vars
-static string TAG_ADDR;
-static string NOTE_OUTLINE_ADDR;
-static string NOTE_STORAGE_ADDR;
-static string CONFIG_FILE_ADDR;
+string TAG_ADDR;
+string NOTE_OUTLINE_ADDR;
+string NOTE_STORAGE_ADDR;
+string CONFIG_FILE_ADDR;
 
 struct strArray{
-    const string tagaddr;
-    const string noteoutaddr;
-    const string notestorageaddr;
+    string tagaddr;
+    string noteoutaddr;
+    string notestorageaddr;
 };
 
 // All of my functions
@@ -204,51 +209,59 @@ bool addNote(note *n) // Sticks note on file and moves it to local dir
   return true;
 }
 
-strArray initConfigFile(string fileAddr = "NotTheAddress")
+strArray initConfigFile()
 {
     ifstream confFile;
-    if(fileAddr != "NotTheAddress")
-    {
-        // Each line will have a different config file to return
-        CONFIG_FILE_ADDR = fileAddr;
-        confFile.open(fileAddr, ios::in);
-        strArray stringArray;
-        // this file has been verified by the logic below
-        string buf;
-        confFile >> buf;
-        stringArray.tagaddr = buf;
+    strArray stringArray;
 
-        confFile >> buf;
-        stringArray.noteoutaddr = buf;
-
-        confFile >> buf;
-        stringArray.notestorageaddr = buf;
-
-        confFile.close();
-        return stringArray;
-    }
-    // Check the define tag for file then local dir
-    // This file should have been created during installation
     confFile.open(CONFIG_ADDR, ios::in);
     if(confFile.is_open())
-        initConfigFile(CONFIG_ADDR);
+    {
+        CONFIG_FILE_ADDR = CONFIG_ADDR;
+        confFile.close();
+    }
+    else
+    {
+        confFile.open(ALT_CONFIG_ADDR, ios::in);
+        if(confFile.is_open())
+        {
+            CONFIG_FILE_ADDR = ALT_CONFIG_ADDR;
+            confFile.close();
+        }
+        else
+        {
+           cout << "No config file!" << endl;
+           return stringArray;
+        }
+    }
+
+    // Each line will have a different config file to return
+    confFile.open(CONFIG_FILE_ADDR, ios::in);
+    // this file has been verified by the logic below
+    string buf;
+    confFile >> buf;
+    stringArray.tagaddr = buf;
+
+    confFile >> buf;
+    stringArray.noteoutaddr = buf;
+
+    confFile >> buf;
+    stringArray.notestorageaddr = buf;
+
     confFile.close();
-    confFile.open(ALT_CONFIG_ADDR, ios::in);
-    if(confFile.is_open())
-        initConfigFile(ALT_CONFIG_ADDR);
-    confFile.close();
+    return stringArray;
 }
 
-bool updateConfigFile(string tagAddr, string noteOutAddr, string noteStorageAddr)
+bool updateConfigFile(string *tagAddr, string *noteOutAddr, string *noteStorageAddr)
 {
     ofstream configFile;
     configFile.open(CONFIG_FILE_ADDR, ios::out | ios::trunc);
     if(!configFile.is_open())
         return false;
 
-    configFile << tagAddr << "\n";
-    configFile << noteOutAddr << "\n";
-    configFile << noteStorageAddr << "\n";
+    configFile << tagAddr /*<< "\n"*/;
+    configFile << noteOutAddr /*<< "\n"*/;
+    configFile << noteStorageAddr /*<< "\n"*/;
     configFile.close();
     return true;
 }
@@ -258,7 +271,7 @@ bool updateConfigFile(string tagAddr, string noteOutAddr, string noteStorageAddr
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
 
 /*  Make the class name into a global variable  */
-TCHAR szClassName[ ] = _T("CodeBlocksWindowsApp");
+TCHAR szClassName[ ] = _T("Notes");
 
 int WINAPI WinMain (HINSTANCE hThisInstance,
                      HINSTANCE hPrevInstance,
@@ -297,7 +310,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 
     bool allGood = true;
     if(needToUpdate)
-        allGood = updateConfigFile(TAG_ADDR, NOTE_OUTLINE_ADDR, NOTE_STORAGE_ADDR);
+        allGood = updateConfigFile(&TAG_ADDR, &NOTE_OUTLINE_ADDR, &NOTE_STORAGE_ADDR);
 
     if(!allGood)
         cout << "Error modifying config file!" << endl;

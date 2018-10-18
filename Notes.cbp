@@ -12,7 +12,9 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add option="-o bin/out" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -37,7 +39,14 @@
 			<Add library="kernel32" />
 			<Add library="comctl32" />
 		</Linker>
+		<Unit filename="bin/Debug/config.conf" />
 		<Unit filename="main.cpp" />
+		<Unit filename="note.cpp" />
+		<Unit filename="note.h" />
+		<Unit filename="readme.txt" />
+		<Unit filename="storage/notes.txt" />
+		<Unit filename="storage/tags.txt" />
+		<Unit filename="subject.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
