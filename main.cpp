@@ -3,7 +3,7 @@
 #elif defined(_UNICODE) && !defined(UNICODE)
     #define UNICODE
 #endif
-
+// TODO: Finish function on making/reading config files
 
 // STL
 #include <iostream>
@@ -13,6 +13,7 @@
 #include <map>
 #include <sstream>
 #include <algorithm>
+#include <cstring>
 
 // WINDOWS
 #include <tchar.h>
@@ -22,15 +23,26 @@
 #include "note.h"
 #include "subject.h"
 
-// DEFS
-#define TAG_ADDR "..\\..\\stroage\\tags.txt"
-#define NOTE_OUTLINE_ADDR "..\\..\\storage\\notes.txt"
-#define NOTE_STORAGE_ADDR "..\\..\\notes"
-// Defines should be replaced by config files so that the relative paths can be replaced by configurable absolute paths
+// Config file addresses
+#define CONFIG_ADDR "C:\\"
+#define ALT_CONFIG_ADDR "config.conf"
+// Figure out where to place it later, for now just check local.
 
-#define DEL_OLD_NOTE FALSE
+#define DEL_OLD_NOTE false
 
 using namespace std;
+
+// Global vars
+static string TAG_ADDR;
+static string NOTE_OUTLINE_ADDR;
+static string NOTE_STORAGE_ADDR;
+static string CONFIG_FILE_ADDR;
+
+struct strArray{
+    const string tagaddr;
+    const string noteoutaddr;
+    const string notestorageaddr;
+};
 
 // All of my functions
 map<int, string> initTagDef() // Function for reading from a tag file
@@ -192,6 +204,55 @@ bool addNote(note *n) // Sticks note on file and moves it to local dir
   return true;
 }
 
+strArray initConfigFile(string fileAddr = "NotTheAddress")
+{
+    ifstream confFile;
+    if(fileAddr != "NotTheAddress")
+    {
+        // Each line will have a different config file to return
+        CONFIG_FILE_ADDR = fileAddr;
+        confFile.open(fileAddr, ios::in);
+        strArray stringArray;
+        // this file has been verified by the logic below
+        string buf;
+        confFile >> buf;
+        stringArray.tagaddr = buf;
+
+        confFile >> buf;
+        stringArray.noteoutaddr = buf;
+
+        confFile >> buf;
+        stringArray.notestorageaddr = buf;
+
+        confFile.close();
+        return stringArray;
+    }
+    // Check the define tag for file then local dir
+    // This file should have been created during installation
+    confFile.open(CONFIG_ADDR, ios::in);
+    if(confFile.is_open())
+        initConfigFile(CONFIG_ADDR);
+    confFile.close();
+    confFile.open(ALT_CONFIG_ADDR, ios::in);
+    if(confFile.is_open())
+        initConfigFile(ALT_CONFIG_ADDR);
+    confFile.close();
+}
+
+bool updateConfigFile(string tagAddr, string noteOutAddr, string noteStorageAddr)
+{
+    ofstream configFile;
+    configFile.open(CONFIG_FILE_ADDR, ios::out | ios::trunc);
+    if(!configFile.is_open())
+        return false;
+
+    configFile << tagAddr << "\n";
+    configFile << noteOutAddr << "\n";
+    configFile << noteStorageAddr << "\n";
+    configFile.close();
+    return true;
+}
+
 // Windows stuff
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
@@ -205,6 +266,41 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
                      int nCmdShow)
 {
     cout << "Hello World!" << endl;
+
+    // Find and load config file
+    strArray strA = initConfigFile();
+    TAG_ADDR = strA.tagaddr;
+    NOTE_OUTLINE_ADDR = strA.noteoutaddr;
+    NOTE_STORAGE_ADDR = strA.notestorageaddr;
+
+    bool needToUpdate = false;
+    if(TAG_ADDR.empty())
+    {
+        cout << "Please enter the address of the tag configuration file: ";
+        cin >> TAG_ADDR;
+        needToUpdate = true;
+    }
+
+    if(NOTE_OUTLINE_ADDR.empty())
+    {
+        cout << "Please enter the address of the note outline file: ";
+        cin >> NOTE_OUTLINE_ADDR;
+        needToUpdate = true;
+    }
+
+    if(NOTE_STORAGE_ADDR.empty())
+    {
+        cout << "Please enter the address of the note storage folder: ";
+        cin >> NOTE_STORAGE_ADDR;
+        needToUpdate = true;
+    }
+
+    bool allGood = true;
+    if(needToUpdate)
+        allGood = updateConfigFile(TAG_ADDR, NOTE_OUTLINE_ADDR, NOTE_STORAGE_ADDR);
+
+    if(!allGood)
+        cout << "Error modifying config file!" << endl;
 
     // Init and debug
     map<int, string> tagDef = initTagDef();
