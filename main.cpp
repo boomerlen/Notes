@@ -1,9 +1,11 @@
-/*  Main.cpp
-*   Author: Hugo Sebesta
-*   Project primarily for personal use so probably no one will ever see this
-*   If anyone does then I said hi!
-*/
+#if defined(UNICODE) && !defined(_UNICODE)
+    #define _UNICODE
+#elif defined(_UNICODE) && !defined(UNICODE)
+    #define UNICODE
+#endif
 
+
+// STL
 #include <iostream>
 #include <vector>
 #include <string>
@@ -12,22 +14,25 @@
 #include <sstream>
 #include <algorithm>
 
-// Not STL
+// WINDOWS
+#include <tchar.h>
 #include <windows.h>
-#include <gtk/gtk.h>
 
-// My files
+// MINE
 #include "note.h"
 #include "subject.h"
 
-#define TAG_ADDR "..\\storage\\tags.txt"
-#define NOTE_OUTLINE_ADDR "..\\storage\\notes.txt"
-#define NOTE_STORAGE_ADDR "..\\notes"
+// DEFS
+#define TAG_ADDR "..\\..\\stroage\\tags.txt"
+#define NOTE_OUTLINE_ADDR "..\\..\\storage\\notes.txt"
+#define NOTE_STORAGE_ADDR "..\\..\\notes"
+// Defines should be replaced by config files so that the relative paths can be replaced by configurable absolute paths
 
-#define DEL_OLD_NOTE false
+#define DEL_OLD_NOTE FALSE
 
 using namespace std;
 
+// All of my functions
 map<int, string> initTagDef() // Function for reading from a tag file
 {
   ifstream file;
@@ -187,43 +192,116 @@ bool addNote(note *n) // Sticks note on file and moves it to local dir
   return true;
 }
 
-int main(int argc, char *argv[])
+// Windows stuff
+/*  Declare Windows procedure  */
+LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
+
+/*  Make the class name into a global variable  */
+TCHAR szClassName[ ] = _T("CodeBlocksWindowsApp");
+
+int WINAPI WinMain (HINSTANCE hThisInstance,
+                     HINSTANCE hPrevInstance,
+                     LPSTR lpszArgument,
+                     int nCmdShow)
 {
-  cout << "Hello World!" << endl;
-  // Init and debug
-  map<int, string> tagDef = initTagDef();
-  if(tagDef.empty())
-    return 1;
+    cout << "Hello World!" << endl;
 
-  vector<note> noteList = initNotesVector();
-  if(noteList.empty())
-  {
-    cout << "Notelist empty" << endl;
-    return 1;
-  }
+    // Init and debug
+    map<int, string> tagDef = initTagDef();
+    if(tagDef.empty())
+        return 1;
 
-  // Initialise lists for each subject.
-  // Tags first
-  vector<note *>  noteTagVector[tagDef.size()]; // Array of vectors
-  for(int i = 0; i < tagDef.size(); i++)
-  {
-    noteTagVector[i] = initTagVector(i, &noteList);
-  }
+    vector<note> noteList = initNotesVector();
+    if(noteList.empty())
+    {
+        cout << "Notelist empty" << endl;
+        return 1;
+    }
 
-  vector<note *> noteSubjectVector[15]; // Note that subjects follow their cast in enum
-  for(int i = 0; i < 15 /* hard coded */; i++)
-  {
-    noteSubjectVector[i] = initSubjectVector(static_cast<subjects>(i), &noteList);
-  }
+    // Initialise lists for each subject.
+    // Tags first
+    vector<note *>  noteTagVector[tagDef.size()]; // Array of vectors
+    for(int i = 0; i < tagDef.size(); i++)
+    {
+        noteTagVector[i] = initTagVector(i, &noteList);
+    }
 
-  /*  Now have these containers:
-  *   map<int, string> tagDef
-  *   vector<note> noteLIst
-  *   vector< vector<*note> > noteTagVector
-  *   vector< vector<*note> > noteSubjectVector
-  */
+    vector<note *> noteSubjectVector[15]; // Note that subjects follow their cast in enum
+    for(int i = 0; i < 15 /* hard coded */; i++)
+    {
+        noteSubjectVector[i] = initSubjectVector(static_cast<subjects>(i), &noteList);
+    }
 
-  // Windows.h can fuck itself, GTK it is.
-  // Insert all GTK code here. Note sure what it is right now because I need to spend more time reading docs
-  return 0;
+    HWND hwnd;               /* This is the handle for our window */
+    MSG messages;            /* Here messages to the application are saved */
+    WNDCLASSEX wincl;        /* Data structure for the windowclass */
+
+    /* The Window structure */
+    wincl.hInstance = hThisInstance;
+    wincl.lpszClassName = szClassName;
+    wincl.lpfnWndProc = WindowProcedure;      /* This function is called by windows */
+    wincl.style = CS_DBLCLKS;                 /* Catch double-clicks */
+    wincl.cbSize = sizeof (WNDCLASSEX);
+
+    /* Use default icon and mouse-pointer */
+    wincl.hIcon = LoadIcon (NULL, IDI_APPLICATION);
+    wincl.hIconSm = LoadIcon (NULL, IDI_APPLICATION);
+    wincl.hCursor = LoadCursor (NULL, IDC_ARROW);
+    wincl.lpszMenuName = NULL;                 /* No menu */
+    wincl.cbClsExtra = 0;                      /* No extra bytes after the window class */
+    wincl.cbWndExtra = 0;                      /* structure or the window instance */
+    /* Use Windows's default colour as the background of the window */
+    wincl.hbrBackground = (HBRUSH) COLOR_BACKGROUND;
+
+    /* Register the window class, and if it fails quit the program */
+    if (!RegisterClassEx (&wincl))
+        return 0;
+
+    /* The class is registered, let's create the program*/
+    hwnd = CreateWindowEx (
+           0,                   /* Extended possibilites for variation */
+           szClassName,         /* Classname */
+           _T("Code::Blocks Template Windows App"),       /* Title Text */
+           WS_OVERLAPPEDWINDOW, /* default window */
+           CW_USEDEFAULT,       /* Windows decides the position */
+           CW_USEDEFAULT,       /* where the window ends up on the screen */
+           544,                 /* The programs width */
+           375,                 /* and height in pixels */
+           HWND_DESKTOP,        /* The window is a child-window to desktop */
+           NULL,                /* No menu */
+           hThisInstance,       /* Program Instance handler */
+           NULL                 /* No Window Creation data */
+           );
+
+    /* Make the window visible on the screen */
+    ShowWindow (hwnd, nCmdShow);
+
+    /* Run the message loop. It will run until GetMessage() returns 0 */
+    while (GetMessage (&messages, NULL, 0, 0))
+    {
+        /* Translate virtual-key messages into character messages */
+        TranslateMessage(&messages);
+        /* Send message to WindowProcedure */
+        DispatchMessage(&messages);
+    }
+
+    /* The program return-value is 0 - The value that PostQuitMessage() gave */
+    return messages.wParam;
+}
+
+
+/*  This function is called by the Windows function DispatchMessage()  */
+
+LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)                  /* handle the messages */
+    {
+        case WM_DESTROY:
+            PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
+            break;
+        default:                      /* for messages that we don't deal with */
+            return DefWindowProc (hwnd, message, wParam, lParam);
+    }
+
+    return 0;
 }
