@@ -273,13 +273,17 @@ LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
 /*  Make the class name into a global variable  */
 TCHAR szClassName[ ] = _T("Notes");
 
+string getInfo(string question)
+{
+    // Make a dialogue box and get some data
+}
+
 int WINAPI WinMain (HINSTANCE hThisInstance,
                      HINSTANCE hPrevInstance,
                      LPSTR lpszArgument,
                      int nCmdShow)
 {
     cout << "Hello World!" << endl;
-
 
     HWND hwnd;               /* This is the handle for our window */
     MSG messages;            /* Here messages to the application are saved */
@@ -310,7 +314,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     hwnd = CreateWindowEx (
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
-           _T("Code::Blocks Template Windows App"),       /* Title Text */
+           _T("Notes"),       /* Title Text */
            WS_OVERLAPPEDWINDOW, /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
@@ -364,13 +368,16 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     // Init and debug
     map<int, string> tagDef = initTagDef();
     if(tagDef.empty())
-        return 1;
+    {
+        cout << "Tag list empty" << endl;
+        //return 1;
+    }
 
     vector<note> noteList = initNotesVector();
     if(noteList.empty())
     {
         cout << "Notelist empty" << endl;
-        return 1;
+        //return 1;
     }
 
     // Initialise lists for each subject.
