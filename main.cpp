@@ -8,7 +8,7 @@
 #elif defined(_UNICODE) && !defined(UNICODE)
     #define UNICODE
 #endif
-// TODO: Finish function on making/reading config files -- bug fix
+// TODO: Finish making the new window stff
 
 // STL
 #include <iostream>
@@ -273,9 +273,12 @@ LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
 /*  Make the class name into a global variable  */
 TCHAR szClassName[ ] = _T("Notes");
 
-string getInfo(string question)
+string getInfo(LPCSTR question, HWND parentHWND, HINSTANCE inst)
 {
     // Make a dialogue box and get some data
+    //HWND newHwnd;
+    //WNDCLASS winclass;
+    CreateWindowEx(0, question, (LPCSTR) NULL, WS_CHILD, CW_USEDEFAULT, CW_USEDEFAULT, 200, 100, parentHWND, (HMENU) NULL, inst, NULL);
 }
 
 int WINAPI WinMain (HINSTANCE hThisInstance,
@@ -315,7 +318,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
            _T("Notes"),       /* Title Text */
-           WS_OVERLAPPEDWINDOW, /* default window */
+           WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL, /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
            544,                 /* The programs width */
@@ -339,8 +342,9 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     bool needToUpdate = false;
     if(TAG_ADDR.empty())
     {
-        cout << "Please enter the address of the tag configuration file: ";
-        cin >> TAG_ADDR;
+        //cout << "Please enter the address of the tag configuration file: ";
+        //cin >> TAG_ADDR;
+        getInfo("Enter the tag config file address", hwnd, hThisInstance);
         needToUpdate = true;
     }
 
