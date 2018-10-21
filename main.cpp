@@ -339,26 +339,26 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     NOTE_OUTLINE_ADDR = strA.noteoutaddr;
     NOTE_STORAGE_ADDR = strA.notestorageaddr;
 
+    // Removing all Cin logic (so the UI doesn't get held up)
     bool needToUpdate = false;
     if(TAG_ADDR.empty())
     {
         //cout << "Please enter the address of the tag configuration file: ";
         //cin >> TAG_ADDR;
-        getInfo("Enter the tag config file address", hwnd, hThisInstance);
         needToUpdate = true;
     }
 
     if(NOTE_OUTLINE_ADDR.empty())
     {
-        cout << "Please enter the address of the note outline file: ";
-        cin >> NOTE_OUTLINE_ADDR;
+        //cout << "Please enter the address of the note outline file: ";
+        //cin >> NOTE_OUTLINE_ADDR;
         needToUpdate = true;
     }
 
     if(NOTE_STORAGE_ADDR.empty())
     {
-        cout << "Please enter the address of the note storage folder: ";
-        cin >> NOTE_STORAGE_ADDR;
+        //cout << "Please enter the address of the note storage folder: ";
+        //cin >> NOTE_STORAGE_ADDR;
         needToUpdate = true;
     }
 
