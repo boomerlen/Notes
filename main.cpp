@@ -31,9 +31,16 @@
 // Config file addresses
 #define CONFIG_ADDR "C:\\"
 #define ALT_CONFIG_ADDR "config.conf"
+
+// My Macros
+#define
+
 // Figure out where to place it later, for now just check local.
 
 #define DEL_OLD_NOTE false
+
+#define WINDOW_LEN 800
+#define WINDOW_HEIGHT 550
 
 using namespace std;
 
@@ -42,6 +49,9 @@ string TAG_ADDR;
 string NOTE_OUTLINE_ADDR;
 string NOTE_STORAGE_ADDR;
 string CONFIG_FILE_ADDR;
+
+vector<note> noteList;
+map<int, string> tagDef;
 
 struct strArray{
     string tagaddr;
@@ -318,11 +328,11 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
            _T("Notes"),       /* Title Text */
-           WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL, /* default window */
+           WS_OVERLAPPEDWINDOW, /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
-           544,                 /* The programs width */
-           375,                 /* and height in pixels */
+           WINDOW_LEN,                 /* The programs width */
+           WINDOW_HEIGHT,                 /* and height in pixels */
            HWND_DESKTOP,        /* The window is a child-window to desktop */
            NULL,                /* No menu */
            hThisInstance,       /* Program Instance handler */
@@ -370,14 +380,14 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
         cout << "Error modifying config file!" << endl;
 
     // Init and debug
-    map<int, string> tagDef = initTagDef();
+    tagDef = initTagDef();
     if(tagDef.empty())
     {
         cout << "Tag list empty" << endl;
         //return 1;
     }
 
-    vector<note> noteList = initNotesVector();
+    noteList = initNotesVector();
     if(noteList.empty())
     {
         cout << "Notelist empty" << endl;
@@ -416,11 +426,27 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 
 LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    PAINTSTRUCT ps;
+    HDC hdc;
+    TCHAR title[] = _T("Notes");
+
     switch (message)                  /* handle the messages */
     {
         case WM_DESTROY:
             PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
             break;
+        case WM_PAINT:
+            hdc = BeginPaint(hwnd, &ps);
+
+            Rectangle(hdc, 3, 3, 100, WINDOW_HEIGHT - 50);
+
+            TextOut(hdc, 5, 5, title, _tcslen(title));
+            TCHAR noteName[32];
+            for(int i = 0; i < noteList.size() && i < 5; i++)
+            {
+                noteName = _T(noteList[i].getName().c_str()); // Standard string to TCHAR/c string/ fucking anything errors
+                TextOut(hdc, 5, 5*(i+1), noteName, _tcslen(noteName));
+            }
         default:                      /* for messages that we don't deal with */
             return DefWindowProc (hwnd, message, wParam, lParam);
     }
